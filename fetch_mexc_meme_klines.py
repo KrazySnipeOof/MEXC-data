@@ -162,10 +162,13 @@ def get_non_meme_blue_chip_tickers(top_n, cache_path, cache_ttl_hours, use_cache
 
 
 def get_mexc_symbols(quote):
+    # Deliberately not filtering on isSpotTradingAllowed: some symbols (e.g. WOJAK)
+    # are flagged isSpotTradingAllowed=False yet still have live, current klines --
+    # the flag doesn't reliably indicate whether historical data is queryable.
     info = http_get_json(f"{MEXC_BASE}/api/v3/exchangeInfo")
     out = {}
     for s in info.get("symbols", []):
-        if s.get("quoteAsset") == quote and s.get("isSpotTradingAllowed"):
+        if s.get("quoteAsset") == quote and s.get("status") == "1":
             out[s["baseAsset"].upper()] = s["symbol"]
     return out
 
@@ -265,6 +268,11 @@ def main():
         cache_path, args.cache_ttl_hours, use_cache=not args.no_cache,
     )
     print(f"Found {len(meme_tickers)} memecoin tickers on CoinGecko")
+
+    added_known = KNOWN_LARGE_MEMECOINS - meme_tickers
+    if added_known:
+        print(f"Adding {len(added_known)} known large memecoin(s) CoinGecko's category lists missed: {sorted(added_known)}")
+        meme_tickers |= added_known
 
     if not args.no_blue_chip_filter:
         print("Fetching global top-market-cap tickers to filter out ticker-squatted blue chips...")
