@@ -154,6 +154,7 @@ const INTERVALS = [
   { label: "1h", min: 60 },
   { label: "4h", min: 240 },
   { label: "1d", min: 1440 },
+  { label: "1w", min: 10080 },
 ];
 
 const state = { symbol: null, interval: 5, symbols: [], createdBy: {}, listingBy: {} };
@@ -266,20 +267,22 @@ function fmtNum(v) {
   return v.toFixed(2);
 }
 
-function renderStats(candles) {
+function renderStats(candles, source) {
   if (!candles.length) { el("stats").innerHTML = ""; return; }
   const first = candles[0], last = candles[candles.length - 1];
   let hi = -Infinity, lo = Infinity, vol = 0;
   for (const c of candles) { hi = Math.max(hi, c.high); lo = Math.min(lo, c.low); vol += c.volume; }
   const chg = ((last.close - first.open) / first.open) * 100;
   const cls = chg >= 0 ? "pos" : "neg";
+  const src = source === "daily" ? "daily · ~3y" : "1-min · ~30d";
   el("stats").innerHTML = `
     <div class="stat"><span class="label">Last</span><span class="val">${fmtPrice(last.close)}</span></div>
     <div class="stat"><span class="label">Change</span><span class="val ${cls}">${chg >= 0 ? "+" : ""}${chg.toFixed(2)}%</span></div>
     <div class="stat"><span class="label">High</span><span class="val">${fmtPrice(hi)}</span></div>
     <div class="stat"><span class="label">Low</span><span class="val">${fmtPrice(lo)}</span></div>
     <div class="stat"><span class="label">Volume</span><span class="val">${fmtNum(vol)}</span></div>
-    <div class="stat"><span class="label">Bars</span><span class="val">${candles.length}</span></div>`;
+    <div class="stat"><span class="label">Bars</span><span class="val">${candles.length}</span></div>
+    <div class="stat"><span class="label">Source</span><span class="val">${src}</span></div>`;
 }
 
 let loadToken = 0;
@@ -298,7 +301,7 @@ async function loadCandles() {
       color: c.close >= c.open ? "rgba(38,166,154,0.5)" : "rgba(239,83,80,0.5)",
     })));
     chart.timeScale().fitContent();
-    renderStats(candles);
+    renderStats(candles, j.source);
   } catch (e) {
     el("stats").innerHTML = `<span class="neg">Error: ${e.message}</span>`;
   } finally {

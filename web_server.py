@@ -45,9 +45,12 @@ def _symbol_files():
         if not sub.is_dir() or not sub.name.endswith(" data"):
             continue
         symbol = sub.name[: -len(" data")]
-        files = sorted(sub.glob(f"{symbol}_*_minute.Last.txt"))
-        if files:
-            out[symbol] = files
+        entry = {
+            "minute": sorted(sub.glob(f"{symbol}_*_minute.Last.txt")),
+            "daily": sorted(sub.glob(f"{symbol}_*_daily.Last.txt")),
+        }
+        if entry["minute"] or entry["daily"]:
+            out[symbol] = entry
     return out
 
 
@@ -66,13 +69,15 @@ _FIRST_LINE_RE = re.compile(r"^(\d{8})\s+(\d{6})")
 def first_candle_date(symbol):
     """Date of the earliest candle for a symbol (its data-start / listing date).
 
-    Reads only the first data line of the earliest file (files are written in
-    ascending time order), so this is cheap to compute for the whole universe.
-    Returns an ISO date string (YYYY-MM-DD) or None.
+    Prefers the daily dataset (which reaches back ~3 years) over the minute
+    dataset (~30 days). Reads only the first data line of the earliest file
+    (files are written in ascending time order), so it's cheap to compute for
+    the whole universe. Returns an ISO date string (YYYY-MM-DD) or None.
     """
-    files = _symbol_files().get(symbol)
-    if not files:
+    entry = _symbol_files().get(symbol)
+    if not entry:
         return None
+    files = entry["daily"] or entry["minute"]
     for path in files:  # files sorted by year ascending
         with open(path, "r", encoding="utf-8") as f:
             for line in f:
@@ -106,14 +111,20 @@ def created_date(symbol):
 
 def symbols_info():
     listing = _listing_dates()
-    return [
-        {
-            "symbol": s,
-            "created": listing.get(s) or first_candle_date(s),
-            "listing": s in listing,
-        }
-        for s in list_symbols()
-    ]
+    files = _symbol_files()
+    out = []
+    for s in list_symbols():
+        entry = files.get(s, {})
+        out.append(
+            {
+                "symbol": s,
+                "created": listing.get(s) or first_candle_date(s),
+                "listing": s in listing,
+                "daily": bool(entry.get("daily")),
+                "minute": bool(entry.get("minute")),
+            }
+        )
+    return out
 
 
 _LINE_RE = re.compile(
@@ -121,14 +132,18 @@ _LINE_RE = re.compile(
 )
 
 
-@lru_cache(maxsize=64)
-def load_candles(symbol):
-    """Parse all candle files for a symbol into a list of dicts.
+@lru_cache(maxsize=128)
+def load_candles(symbol, kind="minute"):
+    """Parse a symbol's candle files of the given kind ("minute" or "daily").
 
     Datetime string YYYYMMDD HHMMSS is interpreted as UTC and returned as a
     unix-second timestamp (what lightweight-charts expects for `time`).
+    Returns None if the symbol has no files of that kind.
     """
-    files = _symbol_files().get(symbol)
+    entry = _symbol_files().get(symbol)
+    if not entry:
+        return None
+    files = entry.get(kind)
     if not files:
         return None
 
@@ -254,17 +269,31 @@ class Handler(BaseHTTPRequestHandler):
             interval = int(qs.get("interval", ["1"])[0])
         except ValueError:
             interval = 1
-        interval = max(1, min(interval, 1440))
+        interval = max(1, min(interval, 40320))  # up to 4-week buckets
 
-        candles = load_candles(symbol)
-        if candles is None:
+        entry = _symbol_files().get(symbol)
+        if entry is None:
             return self._send_json(404, {"error": f"unknown symbol {symbol}"})
+
+        # Intervals >= 1 day are best served from the multi-year daily dataset;
+        # finer intervals come from the ~30-day 1-minute dataset. Fall back to
+        # whichever dataset the symbol actually has.
+        prefer_daily = interval >= 1440 and entry.get("daily")
+        kind = "daily" if prefer_daily else "minute"
+        candles = load_candles(symbol, kind)
+        if candles is None:
+            kind = "daily" if kind == "minute" else "minute"
+            candles = load_candles(symbol, kind)
+        if candles is None:
+            return self._send_json(404, {"error": f"no data for {symbol}"})
+
         data = _downsample(candles, interval)
         return self._send_json(
             200,
             {
                 "symbol": symbol,
                 "interval": interval,
+                "source": kind,
                 "count": len(data),
                 "candles": data,
             },

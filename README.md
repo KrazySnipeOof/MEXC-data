@@ -83,7 +83,10 @@ count or error.
 ## Web dashboard
 
 A local, dependency-free web dashboard for browsing the datasets — candlestick
-+ volume charts, symbol search, and interval switching (1m/5m/15m/1h/4h/1d).
++ volume charts, symbol search, and interval switching
+(1m/5m/15m/1h/4h/1d/1w). Sub-daily intervals are served from the ~30-day
+1-minute dataset; the 1d and 1w views use the multi-year daily dataset when a
+symbol has it (falling back to the 1-minute data otherwise).
 
 ```
 python web_server.py                 # http://127.0.0.1:8000
@@ -99,9 +102,11 @@ The server (standard library only) exposes two JSON endpoints:
 
 - `GET /api/symbols` — available symbols, each with its `created` date (the
   coin's MEXC listing date when known, otherwise the first candle in the local
-  data) and a `listing` flag indicating which of the two it is
+  data), a `listing` flag indicating which of the two it is, and `daily`/
+  `minute` flags for which datasets are available
 - `GET /api/candles?symbol=TRUMPUSDT&interval=5` — OHLCV candles for a symbol,
-  optionally aggregated to an N-minute `interval`
+  aggregated to an N-minute `interval` (>= 1440 uses the daily dataset). The
+  response includes a `source` field (`minute` or `daily`)
 
 ### Coin listing ("created") dates
 
