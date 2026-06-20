@@ -97,7 +97,7 @@ def _coingecko_markets_tickers(params_overrides, max_pages=10):
 def _fetch_meme_tickers(categories):
     tickers = set()
     for category in categories:
-        tickers |= _coingecko_markets_tickers({"category": category})
+        tickers |= _coingecko_markets_tickers({"category": category}, max_pages=100)
     return tickers
 
 
@@ -161,7 +161,7 @@ def get_mexc_symbols(quote):
     return out
 
 
-def fetch_klines(symbol, interval, start_ms, end_ms, limit=1000):
+def fetch_klines(symbol, interval, start_ms, end_ms, limit=500):
     candles = []
     cursor = start_ms
     while cursor < end_ms:
@@ -182,8 +182,6 @@ def fetch_klines(symbol, interval, start_ms, end_ms, limit=1000):
         if next_cursor <= cursor:
             break
         cursor = next_cursor
-        if len(batch) < limit:
-            break
         time.sleep(0.1)
     return candles
 
