@@ -31,8 +31,13 @@ _SYMBOL_CACHE_LOCK = threading.Lock()
 _SYMBOL_CACHE = None
 
 
+@lru_cache(maxsize=1)
 def _symbol_files():
-    """Map SYMBOL -> sorted list of candle file paths for that symbol."""
+    """Map SYMBOL -> sorted list of candle file paths for that symbol.
+
+    Cached: scanning all symbol directories is relatively expensive and the
+    layout doesn't change while the server runs.
+    """
     out = {}
     if not DATA_DIR.exists():
         return out
@@ -52,6 +57,63 @@ def list_symbols():
         if _SYMBOL_CACHE is None:
             _SYMBOL_CACHE = sorted(_symbol_files().keys())
         return _SYMBOL_CACHE
+
+
+_FIRST_LINE_RE = re.compile(r"^(\d{8})\s+(\d{6})")
+
+
+@lru_cache(maxsize=4096)
+def first_candle_date(symbol):
+    """Date of the earliest candle for a symbol (its data-start / listing date).
+
+    Reads only the first data line of the earliest file (files are written in
+    ascending time order), so this is cheap to compute for the whole universe.
+    Returns an ISO date string (YYYY-MM-DD) or None.
+    """
+    files = _symbol_files().get(symbol)
+    if not files:
+        return None
+    for path in files:  # files sorted by year ascending
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                m = _FIRST_LINE_RE.match(line)
+                if m:
+                    ymd = m.group(1)
+                    return f"{ymd[0:4]}-{ymd[4:6]}-{ymd[6:8]}"
+    return None
+
+
+@lru_cache(maxsize=1)
+def _listing_dates():
+    """Real MEXC listing dates from _listing_dates.json (if present).
+
+    Produced by fetch_listing_dates.py. Maps SYMBOL -> 'YYYY-MM-DD'.
+    """
+    path = DATA_DIR / "_listing_dates.json"
+    if path.exists():
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            return {k: v for k, v in data.items() if v}
+        except (json.JSONDecodeError, OSError):
+            pass
+    return {}
+
+
+def created_date(symbol):
+    """Prefer the real MEXC listing date; fall back to the first local candle."""
+    return _listing_dates().get(symbol) or first_candle_date(symbol)
+
+
+def symbols_info():
+    listing = _listing_dates()
+    return [
+        {
+            "symbol": s,
+            "created": listing.get(s) or first_candle_date(s),
+            "listing": s in listing,
+        }
+        for s in list_symbols()
+    ]
 
 
 _LINE_RE = re.compile(
@@ -133,6 +195,14 @@ def _downsample(candles, interval_min):
     return out
 
 
+class DashServer(ThreadingHTTPServer):
+    # On Windows SO_REUSEADDR lets multiple processes bind the same port and
+    # silently steal each other's connections; disable it so a stale server
+    # causes a clear "address already in use" error instead of confusion.
+    allow_reuse_address = False
+    daemon_threads = True
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "MexcDash/1.0"
 
@@ -163,7 +233,7 @@ class Handler(BaseHTTPRequestHandler):
             if path == "/" or path == "/index.html":
                 return self._serve_file(WEB_DIR / "index.html", "text/html; charset=utf-8")
             if path == "/api/symbols":
-                return self._send_json(200, {"symbols": list_symbols()})
+                return self._send_json(200, {"symbols": symbols_info()})
             if path == "/api/candles":
                 return self._handle_candles(parse_qs(parsed.query))
             if path.startswith("/web/"):
@@ -235,7 +305,7 @@ def main():
     n = len(list_symbols())
     print(f"Serving {n} symbols from {DATA_DIR}")
     print(f"Dashboard: http://{args.host}:{args.port}/")
-    httpd = ThreadingHTTPServer((args.host, args.port), Handler)
+    httpd = DashServer((args.host, args.port), Handler)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

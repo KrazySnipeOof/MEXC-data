@@ -72,8 +72,10 @@
   }
   .sym:hover { background: var(--panel-2); }
   .sym.active { background: var(--accent); color: #fff; font-weight: 600; }
+  .sym .meta { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
   .sym .quote { color: var(--muted); font-size: 11px; }
-  .sym.active .quote { color: #dceaff; }
+  .sym .created { color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+  .sym.active .quote, .sym.active .created { color: #dceaff; }
   #count { padding: 4px 16px 10px; color: var(--muted); font-size: 11px; }
 
   /* Main */
@@ -154,7 +156,7 @@ const INTERVALS = [
   { label: "1d", min: 1440 },
 ];
 
-const state = { symbol: null, interval: 5, symbols: [] };
+const state = { symbol: null, interval: 5, symbols: [], createdBy: {}, listingBy: {} };
 
 const el = (id) => document.getElementById(id);
 
@@ -213,7 +215,12 @@ function renderSymbols(filter = "") {
   for (const s of shown) {
     const row = document.createElement("div");
     row.className = "sym" + (s === state.symbol ? " active" : "");
-    row.innerHTML = `<span>${baseOf(s)}</span><span class="quote">USDT</span>`;
+    const created = state.createdBy[s] || "";
+    const tip = state.listingBy[s] ? "MEXC listing date" : "First candle in local data";
+    row.innerHTML =
+      `<span>${baseOf(s)}</span>` +
+      `<span class="meta"><span class="quote">USDT</span>` +
+      `<span class="created" title="${tip}">${created}</span></span>`;
     row.onclick = () => selectSymbol(s);
     frag.appendChild(row);
   }
@@ -225,7 +232,14 @@ el("search").addEventListener("input", (e) => renderSymbols(e.target.value));
 async function loadSymbols() {
   const r = await fetch("/api/symbols");
   const j = await r.json();
-  state.symbols = j.symbols || [];
+  const items = j.symbols || [];
+  state.symbols = items.map((it) => it.symbol);
+  state.createdBy = {};
+  state.listingBy = {};
+  for (const it of items) {
+    state.createdBy[it.symbol] = it.created || "";
+    state.listingBy[it.symbol] = !!it.listing;
+  }
   renderSymbols();
 }
 
@@ -233,7 +247,10 @@ function selectSymbol(sym) {
   state.symbol = sym;
   renderSymbols(el("search").value);
   el("title").firstChild.textContent = baseOf(sym);
-  el("title").querySelector(".pair").textContent = "/USDT";
+  const created = state.createdBy[sym];
+  const verb = state.listingBy[sym] ? "listed" : "data since";
+  el("title").querySelector(".pair").textContent =
+    "/USDT" + (created ? ` · ${verb} ${created}` : "");
   loadCandles();
 }
 

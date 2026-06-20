@@ -65,6 +65,25 @@ candle data itself is served entirely from your local files).
 
 The server (standard library only) exposes two JSON endpoints:
 
-- `GET /api/symbols` — list of available symbols
+- `GET /api/symbols` — available symbols, each with its `created` date (the
+  coin's MEXC listing date when known, otherwise the first candle in the local
+  data) and a `listing` flag indicating which of the two it is
 - `GET /api/candles?symbol=TRUMPUSDT&interval=5` — OHLCV candles for a symbol,
   optionally aggregated to an N-minute `interval`
+
+### Coin listing ("created") dates
+
+The dashboard shows each coin's creation date next to its symbol. By default
+this is the first candle present in the local data, but you can resolve the
+real MEXC listing date for every coin with:
+
+```
+python fetch_listing_dates.py            # all symbols found in the data dir
+python fetch_listing_dates.py --symbols PEPEUSDT,TRUMPUSDT
+python fetch_listing_dates.py --refresh  # re-resolve, ignoring the cache
+```
+
+This walks each symbol's daily klines backward to find its first candle and
+writes `crypto csv data/_listing_dates.json` (`SYMBOL -> YYYY-MM-DD`). The web
+server picks that file up automatically and prefers it over the
+first-candle-in-data fallback.
