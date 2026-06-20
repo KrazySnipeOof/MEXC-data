@@ -47,3 +47,24 @@ re-hitting CoinGecko's rate limits on every run within `--cache-ttl-hours`
 
 `_mexc_meme_manifest.csv` in the output folder records every symbol attempted
 and its candle count or error.
+
+## Web dashboard
+
+A local, dependency-free web dashboard for browsing the datasets — candlestick
++ volume charts, symbol search, and interval switching (1m/5m/15m/1h/4h/1d).
+
+```
+python web_server.py                 # http://127.0.0.1:8000
+python web_server.py --port 8765     # pick a different port
+python web_server.py --data "crypto csv data"
+```
+
+Then open the printed URL in a browser. Charts are rendered with TradingView's
+lightweight-charts (loaded from a CDN, so the page needs internet access; the
+candle data itself is served entirely from your local files).
+
+The server (standard library only) exposes two JSON endpoints:
+
+- `GET /api/symbols` — list of available symbols
+- `GET /api/candles?symbol=TRUMPUSDT&interval=5` — OHLCV candles for a symbol,
+  optionally aggregated to an N-minute `interval`
