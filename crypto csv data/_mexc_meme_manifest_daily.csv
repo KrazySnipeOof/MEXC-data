@@ -258,7 +258,6 @@ TAP,TAPUSDT,ok:606 candles
 TCAPY,TCAPYUSDT,ok:0 candles
 TESTICLE,TESTICLEUSDT,ok:0 candles
 THE,THEUSDT,ok:0 candles
-TIT,TITUSDT,ok:313 candles (manually fetched with narrower window -- full request returned empty due to MEXC API quirk for thinly-traded symbols)
 TMOON,TMOONUSDT,ok:0 candles
 TONNY,TONNYUSDT,ok:0 candles
 TOP,TOPUSDT,ok:1095 candles

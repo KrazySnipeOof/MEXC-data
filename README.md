@@ -22,10 +22,15 @@ Historical OHLCV candles for memecoins tradable on [MEXC](https://www.mexc.com) 
 This is a ticker-based heuristic, not a guarantee:
 - See `KNOWN_LARGE_MEMECOINS` and the `--exclude` flag if you spot a false positive
   (a ticker collision that let a non-meme coin through).
-- Use `--include` to force-add a ticker CoinGecko's category lists missed — this
-  happens for very low-cap coins sitting right at a category list's cutoff (e.g.
-  `TIT`/titcoin, ~$300k market cap, was added this way after confirming it independently
-  via CoinGecko's per-coin profile data).
+- Use `--include` to force-add a ticker CoinGecko's category lists missed.
+- `--deep-verify` individually checks every otherwise-unmatched MEXC ticker against
+  that coin's own CoinGecko profile categories (requires a `COINGECKO_API_KEY` in
+  `.env` to be practical at MEXC's ~1900-symbol scale; see below).
+- Be careful with ticker-only identification across exchanges: MEXC's `TIT` ticker,
+  for example, turned out to be an unrelated project ("Titans Tap" per MEXC's own
+  `fullName` field) and not the similarly-abbreviated "titcoin" found on CoinGecko --
+  always cross-check `fullName`/full project name, not just the short ticker, before
+  trusting a match.
 
 ## Known MEXC API limitation: 1-minute candles only go back ~30 days
 
@@ -68,7 +73,8 @@ python fetch_mexc_meme_klines.py --interval 1d --days 1095          # 3y of dail
 python fetch_mexc_meme_klines.py --days 7 --limit 5                 # smoke test
 python fetch_mexc_meme_klines.py --categories meme-token,solana-meme-coins
 python fetch_mexc_meme_klines.py --exclude FOO,BAR                  # extra exclusions
-python fetch_mexc_meme_klines.py --include TIT                      # force-add a missed ticker
+python fetch_mexc_meme_klines.py --include FOO                      # force-add a missed ticker
+python fetch_mexc_meme_klines.py --deep-verify                       # see below
 ```
 
 No third-party dependencies — standard library only. Rerun anytime to refresh
@@ -79,6 +85,28 @@ re-hitting CoinGecko's rate limits on every run within `--cache-ttl-hours`
 `_mexc_meme_manifest.csv` (1-minute run) and `_mexc_meme_manifest_daily.csv`
 (daily run) in the output folder record every symbol attempted and its candle
 count or error.
+
+## Deeper verification with a CoinGecko API key
+
+CoinGecko's bulk category-list endpoints (`/coins/markets?category=...`) are
+inconsistent with what's actually on a coin's own profile page — a few confirmed
+cases (CATI, HMSTR) were tagged correctly on their own CoinGecko profile but
+absent from every bulk category list we queried. `--deep-verify` works around
+this by checking every MEXC ticker not already matched against that specific
+coin's own profile categories instead of the bulk lists.
+
+This costs 1-2 CoinGecko API calls per unmatched ticker (~1900 MEXC USDT pairs
+total), which is impractical on anonymous/no-key access (rate limited to
+roughly one call a minute). Get a free Demo-tier key at
+https://www.coingecko.com/en/developers/dashboard, then create a `.env` file
+next to the script (already gitignored):
+
+```
+COINGECKO_API_KEY=your_key_here
+```
+
+The script picks it up automatically and adds the `x-cg-demo-api-key` header
+to every CoinGecko request.
 
 ## Web dashboard
 

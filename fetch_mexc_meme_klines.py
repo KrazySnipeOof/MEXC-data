@@ -49,9 +49,36 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
-def http_get_json(url, params=None, retries=6):
+def _load_dotenv(path):
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
+_load_dotenv(SCRIPT_DIR / ".env")
+
+# CoinGecko Demo-tier key (free signup, raises the rate limit well above
+# anonymous access). Pro-tier keys use a different base URL and header
+# (pro-api.coingecko.com / x-cg-pro-api-key) -- not handled here since we
+# only have a Demo key, but that's the only thing that would need to change.
+COINGECKO_API_KEY = os.environ.get("COINGECKO_API_KEY", "").strip()
+
+
+def _coingecko_headers():
+    headers = {"User-Agent": USER_AGENT}
+    if COINGECKO_API_KEY:
+        headers["x-cg-demo-api-key"] = COINGECKO_API_KEY
+    return headers
+
+
+def http_get_json(url, params=None, retries=6, headers=None):
     full_url = f"{url}?{urlencode(params)}" if params else url
-    req = urllib.request.Request(full_url, headers={"User-Agent": USER_AGENT})
+    req = urllib.request.Request(full_url, headers=headers or {"User-Agent": USER_AGENT})
     delay = 2.0
     for attempt in range(retries):
         try:
@@ -75,12 +102,16 @@ def http_get_json(url, params=None, retries=6):
     raise RuntimeError(f"Failed to GET {full_url}")
 
 
+def coingecko_get(path, params=None):
+    return http_get_json(f"{COINGECKO_BASE}{path}", params=params, headers=_coingecko_headers())
+
+
 def _coingecko_markets_tickers(params_overrides, max_pages=10):
     tickers = set()
     page = 1
     while page <= max_pages:
-        data = http_get_json(
-            f"{COINGECKO_BASE}/coins/markets",
+        data = coingecko_get(
+            "/coins/markets",
             params={
                 "vs_currency": "usd",
                 "order": "market_cap_desc",
@@ -173,6 +204,88 @@ def get_mexc_symbols(quote):
     return out
 
 
+def _search_coin_ids_for_ticker(ticker, max_candidates=5):
+    data = coingecko_get("/search", params={"query": ticker})
+    candidates = [c["id"] for c in data.get("coins", []) if c.get("symbol", "").upper() == ticker]
+    return candidates[:max_candidates]
+
+
+def _coin_has_meme_category(coin_id):
+    data = coingecko_get(
+        f"/coins/{coin_id}",
+        params={
+            "localization": "false", "tickers": "false", "market_data": "false",
+            "community_data": "false", "developer_data": "false", "sparkline": "false",
+        },
+    )
+    categories = data.get("categories") or []
+    return any("meme" in (c or "").lower() for c in categories)
+
+
+def deep_verify_tickers(tickers, cache_path, cache_ttl_hours, use_cache=True, delay=0.5):
+    """
+    Per-coin verification for tickers the bulk CoinGecko category-list endpoints
+    didn't surface. Checks each ticker's own CoinGecko profile categories directly --
+    slower (1-2 API calls per ticker) but more accurate than the bulk lists, which
+    have proven inconsistent (CATI and HMSTR were both missing from bulk category
+    results despite their own profiles correctly listing a meme category). Only
+    matches by exact ticker symbol -- doesn't catch cases where MEXC's ticker and
+    CoinGecko's symbol differ for the same project (the original motivation here,
+    "TIT", turned out to actually be an unrelated coin -- MEXC's own fullName field
+    said "Titans Tap", not titcoin -- so it's not a counterexample after all).
+    Results are cached per-ticker since this is the slow, API-quota-consuming path.
+    """
+    cache = {}
+    if cache_path.exists():
+        try:
+            cache = json.loads(cache_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            cache = {}
+    verify_cache = cache.setdefault("percoin_verify", {})
+
+    confirmed = set()
+    to_check = []
+    now = time.time()
+    for t in sorted(tickers):
+        entry = verify_cache.get(t)
+        if use_cache and entry and (now - entry["checked_at"]) < cache_ttl_hours * 3600:
+            if entry["is_meme"]:
+                confirmed.add(t)
+        else:
+            to_check.append(t)
+
+    if not to_check:
+        print(f"All {len(tickers)} tickers already deep-verified (cached); {len(confirmed)} confirmed as meme")
+        return confirmed
+
+    print(f"Deep-verifying {len(to_check)} tickers individually against CoinGecko ({len(tickers) - len(to_check)} cached)...")
+    for i, ticker in enumerate(to_check, 1):
+        is_meme = False
+        try:
+            coin_ids = _search_coin_ids_for_ticker(ticker)
+            time.sleep(delay)
+            for coin_id in coin_ids:
+                if _coin_has_meme_category(coin_id):
+                    is_meme = True
+                    time.sleep(delay)
+                    break
+                time.sleep(delay)
+        except Exception as e:
+            print(f"  ({ticker}: verify failed, skipping -- {e})", file=sys.stderr)
+        verify_cache[ticker] = {"checked_at": time.time(), "is_meme": is_meme}
+        if is_meme:
+            confirmed.add(ticker)
+            print(f"  [{i}/{len(to_check)}] {ticker}: CONFIRMED meme")
+        elif i % 50 == 0:
+            print(f"  [{i}/{len(to_check)}] checked so far, {len(confirmed)} confirmed...")
+        if i % 25 == 0:
+            cache_path.write_text(json.dumps(cache), encoding="utf-8")
+
+    cache_path.write_text(json.dumps(cache), encoding="utf-8")
+    print(f"Deep verification done: {len(confirmed)} additional meme ticker(s) confirmed")
+    return confirmed
+
+
 def fetch_klines(symbol, interval, start_ms, end_ms, limit=500):
     candles = []
     cursor = start_ms
@@ -254,6 +367,12 @@ def main():
         help="Comma-separated extra tickers to force-include even if CoinGecko's category "
              "lists miss them (common for very low-cap coins near category cutoffs)",
     )
+    parser.add_argument(
+        "--deep-verify", action="store_true",
+        help="Individually check every MEXC ticker not already matched against its own "
+             "CoinGecko profile categories (slow, ~1-2 API calls/ticker -- requires a "
+             "COINGECKO_API_KEY in .env to be practical at MEXC's ~1900-symbol scale)",
+    )
     args = parser.parse_args()
 
     out_dir = Path(args.out)
@@ -291,6 +410,13 @@ def main():
     print("Fetching MEXC tradable symbols...")
     mexc_symbols = get_mexc_symbols(args.quote)
     print(f"MEXC has {len(mexc_symbols)} {args.quote} spot pairs")
+
+    if args.deep_verify:
+        unverified = set(mexc_symbols.keys()) - meme_tickers - manual_exclude
+        newly_confirmed = deep_verify_tickers(unverified, cache_path, args.cache_ttl_hours, use_cache=not args.no_cache)
+        if not args.no_blue_chip_filter:
+            newly_confirmed -= blue_chip_tickers
+        meme_tickers |= newly_confirmed
 
     matched = sorted((b, mexc_symbols[b]) for b in meme_tickers if b in mexc_symbols)
     print(f"Matched {len(matched)} memecoins tradable on MEXC against {args.quote}\n")
