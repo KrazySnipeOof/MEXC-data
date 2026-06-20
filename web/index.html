@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MEXC Memecoin Dashboard</title>
+<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+  :root {
+    --bg: #0b0e14;
+    --panel: #121722;
+    --panel-2: #19202e;
+    --border: #232c3d;
+    --text: #d7dee9;
+    --muted: #7d8aa0;
+    --accent: #4f9dff;
+    --up: #26a69a;
+    --down: #ef5350;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  /* Sidebar */
+  #sidebar {
+    width: 280px;
+    flex: 0 0 280px;
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+  #sidebar header {
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  #sidebar h1 {
+    font-size: 15px;
+    margin: 0 0 2px;
+    letter-spacing: .3px;
+  }
+  #sidebar .sub { color: var(--muted); font-size: 12px; }
+  #search {
+    margin: 12px 16px;
+    padding: 9px 12px;
+    width: calc(100% - 32px);
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+  }
+  #search:focus { border-color: var(--accent); }
+  #symbol-list { overflow-y: auto; flex: 1; padding: 0 8px 12px; }
+  .sym {
+    padding: 9px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  .sym:hover { background: var(--panel-2); }
+  .sym.active { background: var(--accent); color: #fff; font-weight: 600; }
+  .sym .meta { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+  .sym .quote { color: var(--muted); font-size: 11px; }
+  .sym .created { color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+  .sym.active .quote, .sym.active .created { color: #dceaff; }
+  #count { padding: 4px 16px 10px; color: var(--muted); font-size: 11px; }
+
+  /* Main */
+  #main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  #toolbar {
+    height: 56px;
+    flex: 0 0 56px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 20px;
+    background: var(--panel);
+  }
+  #title { font-size: 18px; font-weight: 600; }
+  #title .pair { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 6px; }
+  .stats { display: flex; gap: 18px; margin-left: auto; font-size: 12px; }
+  .stat { display: flex; flex-direction: column; }
+  .stat .label { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .5px; }
+  .stat .val { font-variant-numeric: tabular-nums; font-size: 13px; }
+  .pos { color: var(--up); }
+  .neg { color: var(--down); }
+
+  #intervals { display: flex; gap: 4px; }
+  .iv {
+    padding: 5px 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .iv:hover { color: var(--text); }
+  .iv.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  #chart-wrap { flex: 1; position: relative; }
+  #chart { position: absolute; inset: 0; }
+  #empty, #loading {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 14px; pointer-events: none;
+  }
+  #loading { display: none; }
+</style>
+</head>
+<body>
+  <aside id="sidebar">
+    <header>
+      <h1>MEXC Memecoin Data</h1>
+      <div class="sub">1-minute OHLCV candles</div>
+    </header>
+    <input id="search" type="text" placeholder="Search symbol..." autocomplete="off" />
+    <div id="count"></div>
+    <div id="symbol-list"></div>
+  </aside>
+
+  <main id="main">
+    <div id="toolbar">
+      <div id="title">Select a symbol<span class="pair"></span></div>
+      <div id="intervals"></div>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div id="chart-wrap">
+      <div id="chart"></div>
+      <div id="empty">Pick a memecoin from the left to load its chart</div>
+      <div id="loading">Loading…</div>
+    </div>
+  </main>
+
+<script>
+const INTERVALS = [
+  { label: "1m", min: 1 },
+  { label: "5m", min: 5 },
+  { label: "15m", min: 15 },
+  { label: "1h", min: 60 },
+  { label: "4h", min: 240 },
+  { label: "1d", min: 1440 },
+];
+
+const state = { symbol: null, interval: 5, symbols: [], createdBy: {}, listingBy: {} };
+
+const el = (id) => document.getElementById(id);
+
+// ---- Chart setup ----
+const chart = LightweightCharts.createChart(el("chart"), {
+  layout: { background: { color: "#0b0e14" }, textColor: "#d7dee9" },
+  grid: {
+    vertLines: { color: "#19202e" },
+    horzLines: { color: "#19202e" },
+  },
+  rightPriceScale: { borderColor: "#232c3d" },
+  timeScale: { borderColor: "#232c3d", timeVisible: true, secondsVisible: false },
+  crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+});
+
+const candleSeries = chart.addCandlestickSeries({
+  upColor: "#26a69a", downColor: "#ef5350",
+  borderUpColor: "#26a69a", borderDownColor: "#ef5350",
+  wickUpColor: "#26a69a", wickDownColor: "#ef5350",
+});
+
+const volumeSeries = chart.addHistogramSeries({
+  priceFormat: { type: "volume" },
+  priceScaleId: "vol",
+});
+chart.priceScale("vol").applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } });
+
+new ResizeObserver(() => {
+  const w = el("chart-wrap");
+  chart.resize(w.clientWidth, w.clientHeight);
+}).observe(el("chart-wrap"));
+
+// ---- Interval buttons ----
+function renderIntervals() {
+  const box = el("intervals");
+  box.innerHTML = "";
+  for (const iv of INTERVALS) {
+    const b = document.createElement("div");
+    b.className = "iv" + (iv.min === state.interval ? " active" : "");
+    b.textContent = iv.label;
+    b.onclick = () => { state.interval = iv.min; renderIntervals(); if (state.symbol) loadCandles(); };
+    box.appendChild(b);
+  }
+}
+
+// ---- Symbol list ----
+function baseOf(sym) { return sym.replace(/USDT$/, ""); }
+
+function renderSymbols(filter = "") {
+  const list = el("symbol-list");
+  list.innerHTML = "";
+  const f = filter.trim().toUpperCase();
+  const shown = state.symbols.filter((s) => !f || s.includes(f));
+  el("count").textContent = `${shown.length} / ${state.symbols.length} symbols`;
+  const frag = document.createDocumentFragment();
+  for (const s of shown) {
+    const row = document.createElement("div");
+    row.className = "sym" + (s === state.symbol ? " active" : "");
+    const created = state.createdBy[s] || "";
+    const tip = state.listingBy[s] ? "MEXC listing date" : "First candle in local data";
+    row.innerHTML =
+      `<span>${baseOf(s)}</span>` +
+      `<span class="meta"><span class="quote">USDT</span>` +
+      `<span class="created" title="${tip}">${created}</span></span>`;
+    row.onclick = () => selectSymbol(s);
+    frag.appendChild(row);
+  }
+  list.appendChild(frag);
+}
+
+el("search").addEventListener("input", (e) => renderSymbols(e.target.value));
+
+async function loadSymbols() {
+  const r = await fetch("/api/symbols");
+  const j = await r.json();
+  const items = j.symbols || [];
+  state.symbols = items.map((it) => it.symbol);
+  state.createdBy = {};
+  state.listingBy = {};
+  for (const it of items) {
+    state.createdBy[it.symbol] = it.created || "";
+    state.listingBy[it.symbol] = !!it.listing;
+  }
+  renderSymbols();
+}
+
+function selectSymbol(sym) {
+  state.symbol = sym;
+  renderSymbols(el("search").value);
+  el("title").firstChild.textContent = baseOf(sym);
+  const created = state.createdBy[sym];
+  const verb = state.listingBy[sym] ? "listed" : "data since";
+  el("title").querySelector(".pair").textContent =
+    "/USDT" + (created ? ` · ${verb} ${created}` : "");
+  loadCandles();
+}
+
+function fmtPrice(v) {
+  if (v >= 1) return v.toFixed(4);
+  if (v >= 0.001) return v.toFixed(6);
+  return v.toPrecision(4);
+}
+function fmtNum(v) {
+  if (v >= 1e9) return (v / 1e9).toFixed(2) + "B";
+  if (v >= 1e6) return (v / 1e6).toFixed(2) + "M";
+  if (v >= 1e3) return (v / 1e3).toFixed(2) + "K";
+  return v.toFixed(2);
+}
+
+function renderStats(candles) {
+  if (!candles.length) { el("stats").innerHTML = ""; return; }
+  const first = candles[0], last = candles[candles.length - 1];
+  let hi = -Infinity, lo = Infinity, vol = 0;
+  for (const c of candles) { hi = Math.max(hi, c.high); lo = Math.min(lo, c.low); vol += c.volume; }
+  const chg = ((last.close - first.open) / first.open) * 100;
+  const cls = chg >= 0 ? "pos" : "neg";
+  el("stats").innerHTML = `
+    <div class="stat"><span class="label">Last</span><span class="val">${fmtPrice(last.close)}</span></div>
+    <div class="stat"><span class="label">Change</span><span class="val ${cls}">${chg >= 0 ? "+" : ""}${chg.toFixed(2)}%</span></div>
+    <div class="stat"><span class="label">High</span><span class="val">${fmtPrice(hi)}</span></div>
+    <div class="stat"><span class="label">Low</span><span class="val">${fmtPrice(lo)}</span></div>
+    <div class="stat"><span class="label">Volume</span><span class="val">${fmtNum(vol)}</span></div>
+    <div class="stat"><span class="label">Bars</span><span class="val">${candles.length}</span></div>`;
+}
+
+let loadToken = 0;
+async function loadCandles() {
+  const token = ++loadToken;
+  el("empty").style.display = "none";
+  el("loading").style.display = "flex";
+  try {
+    const r = await fetch(`/api/candles?symbol=${encodeURIComponent(state.symbol)}&interval=${state.interval}`);
+    const j = await r.json();
+    if (token !== loadToken) return; // a newer request superseded this one
+    const candles = j.candles || [];
+    candleSeries.setData(candles.map((c) => ({ time: c.time, open: c.open, high: c.high, low: c.low, close: c.close })));
+    volumeSeries.setData(candles.map((c) => ({
+      time: c.time, value: c.volume,
+      color: c.close >= c.open ? "rgba(38,166,154,0.5)" : "rgba(239,83,80,0.5)",
+    })));
+    chart.timeScale().fitContent();
+    renderStats(candles);
+  } catch (e) {
+    el("stats").innerHTML = `<span class="neg">Error: ${e.message}</span>`;
+  } finally {
+    if (token === loadToken) el("loading").style.display = "none";
+  }
+}
+
+renderIntervals();
+loadSymbols();
+</script>
+</body>
+</html>
