@@ -1,19 +1,28 @@
 """
-Fetch 1-minute (or other interval) historical klines for memecoins listed on MEXC spot.
+Fetch historical klines for memecoins listed on MEXC spot.
 
 Memecoin universe = CoinGecko category coins (default category: meme-token),
 intersected with MEXC's tradable spot symbols for the given quote asset (default USDT).
 Ticker-symbol matching is an approximation -- a handful of MEXC listings may be
 false positives/negatives if a ticker is reused across unrelated projects.
 
-Output format: crypto csv data/{SYMBOL} data/{SYMBOL}_{YEAR}_minute.Last.txt,
+IMPORTANT: MEXC's /api/v3/klines only serves 1-minute candles for a rolling ~30-day
+window -- requesting startTime further back than that returns an empty result (not
+an error), regardless of how long the symbol has actually been listed. Coarser
+intervals (60m, 4h, 1d, 1M) are not subject to this cliff and support multi-year
+lookback. Valid interval values: 1m, 5m, 15m, 30m, 60m, 4h, 1d, 1M (NOT 1h/1w/1mo --
+those are rejected by the API despite looking like reasonable aliases).
+
+Output format: crypto csv data/{SYMBOL} data/{SYMBOL}_{YEAR}_{granularity}.Last.txt
+(granularity is "minute" for --interval 1m, "daily" for --interval 1d, etc.),
 semicolon-delimited, no header, columns:
     Datetime(YYYYMMDD HHMMSS);Open;High;Low;Close;Volume
 split into one file per calendar year, so it drops straight into
 load_1m_data()-style loaders (pandas.read_csv(sep=";", header=None, ...)).
 
 Usage:
-    python fetch_mexc_meme_klines.py --days 30
+    python fetch_mexc_meme_klines.py --days 30                          # 1m, capped at ~30d by MEXC
+    python fetch_mexc_meme_klines.py --interval 1d --days 1095          # 3y of daily candles
     python fetch_mexc_meme_klines.py --days 7 --interval 1m --limit 5   # smoke test
     python fetch_mexc_meme_klines.py --categories meme-token,solana-meme-coins --quote USDT
 """
@@ -186,7 +195,13 @@ def fetch_klines(symbol, interval, start_ms, end_ms, limit=500):
     return candles
 
 
-def write_year_files(out_dir, symbol, candles):
+GRANULARITY_LABELS = {
+    "1m": "minute", "5m": "5minute", "15m": "15minute", "30m": "30minute",
+    "60m": "hourly", "4h": "4hour", "1d": "daily", "1M": "monthly",
+}
+
+
+def write_year_files(out_dir, symbol, candles, granularity="minute"):
     by_year = defaultdict(list)
     for c in candles:
         dt = datetime.fromtimestamp(c[0] / 1000, tz=timezone.utc)
@@ -197,7 +212,7 @@ def write_year_files(out_dir, symbol, candles):
 
     for year, rows in sorted(by_year.items()):
         rows.sort(key=lambda r: r[0])
-        path = symbol_dir / f"{symbol}_{year}_minute.Last.txt"
+        path = symbol_dir / f"{symbol}_{year}_{granularity}.Last.txt"
         with open(path, "w", encoding="utf-8") as f:
             for dt, c in rows:
                 ts = dt.strftime("%Y%m%d %H%M%S")
@@ -210,7 +225,7 @@ def main():
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("--days", type=float, default=30, help="Days of history to fetch (default: 30)")
-    parser.add_argument("--interval", default="1m", help="Kline interval: 1m,5m,15m,30m,1h,4h,1d,1w,1mo (default: 1m)")
+    parser.add_argument("--interval", default="1m", help="Kline interval: 1m,5m,15m,30m,60m,4h,1d,1M (default: 1m). 1m is capped at ~30d of history by MEXC.")
     parser.add_argument("--quote", default="USDT", help="Quote asset (default: USDT)")
     parser.add_argument(
         "--categories", default="meme-token",
@@ -230,6 +245,11 @@ def main():
     parser.add_argument(
         "--exclude", default="",
         help="Comma-separated extra tickers to exclude (e.g. for ticker collisions you've spotted)",
+    )
+    parser.add_argument(
+        "--include", default="",
+        help="Comma-separated extra tickers to force-include even if CoinGecko's category "
+             "lists miss them (common for very low-cap coins near category cutoffs)",
     )
     args = parser.parse_args()
 
@@ -257,6 +277,9 @@ def main():
     manual_exclude = {t.strip().upper() for t in args.exclude.split(",") if t.strip()}
     meme_tickers -= manual_exclude
 
+    manual_include = {t.strip().upper() for t in args.include.split(",") if t.strip()}
+    meme_tickers |= manual_include
+
     print("Fetching MEXC tradable symbols...")
     mexc_symbols = get_mexc_symbols(args.quote)
     print(f"MEXC has {len(mexc_symbols)} {args.quote} spot pairs")
@@ -270,7 +293,9 @@ def main():
     end_ms = int(time.time() * 1000)
     start_ms = end_ms - int(args.days * 86400 * 1000)
 
-    manifest_path = out_dir / "_mexc_meme_manifest.csv"
+    granularity = GRANULARITY_LABELS.get(args.interval, args.interval)
+    manifest_name = "_mexc_meme_manifest.csv" if granularity == "minute" else f"_mexc_meme_manifest_{granularity}.csv"
+    manifest_path = out_dir / manifest_name
     ok, failed = 0, 0
     with open(manifest_path, "w", encoding="utf-8") as manifest:
         manifest.write("base_asset,mexc_symbol,status\n")
@@ -279,7 +304,7 @@ def main():
                 print(f"Fetching {symbol} ({args.interval}, last {args.days}d)...")
                 candles = fetch_klines(symbol, args.interval, start_ms, end_ms)
                 if candles:
-                    write_year_files(out_dir, symbol, candles)
+                    write_year_files(out_dir, symbol, candles, granularity=granularity)
                 manifest.write(f"{base},{symbol},ok:{len(candles)} candles\n")
                 ok += 1
             except Exception as e:
