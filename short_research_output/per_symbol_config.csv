@@ -1,0 +1,324 @@
+symbol,edge_class,suggested_setup_name,entry_condition_human_readable,tp_pct,sl_pct,suggested_leverage_min,suggested_leverage_max
+4USDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+67USDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ABUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+ACTUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+AEONUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+AEROBUDUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+AGIUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+AICUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+AIDOGEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+AIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+AIXBTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+AIXUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+AKITAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ALICEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+AMIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+AMOREUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ANIMEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ANIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ANONUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+APUUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+ARCUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+ARGUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+ARIAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ASTEROIDUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ATHUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+ATLASUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal",,,1.0,1.0
+AURORAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+AVAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+BABYBONKUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BABYDOGEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+BABYSHARKUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BABYUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BADGERUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+BANANAS31USDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BANANAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+BANKUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BANUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+BASEDUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BBUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+BCATUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BDCUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+BELLSUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+BELUGAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BELUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+BERTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BIRBUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BLASTUSDT,SPIKE_MEAN_REVERSION_EDGE,SpikeShortDaily,"Close > 2.0 stdev above its 20d mean or > 2.0x its 20d median; short at close, hold up to 5d",-25.33,25.33,1.0,2.0
+BLUBUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal",,,1.0,1.0
+BLUEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BMTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BNCUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+BOBAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+BOBERUSDT,SPIKE_MEAN_REVERSION_EDGE,SpikeShortDaily,"Close > 2.0 stdev above its 20d mean or > 2.0x its 20d median; short at close, hold up to 5d",-15.11,12.0,1.0,1.5
+BOBOUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BOBUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BOMEUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+BONEUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal",,,1.0,1.0
+BONKUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+BROCCOLIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BSBUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BSTUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+BULLAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BULLISHUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BULLSUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BULLUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+BUTTCOINUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+CAPUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+CATCOINUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+CATIUSDT,GRIND_DOWN_EDGE,GrindShortDaily,"New 10d closing high inside a statistically negative drift regime; short at close, hold up to 7d",-44.84,44.84,1.0,1.5
+CATUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: non_positive_expectancy)",,,1.0,1.0
+CAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+CAWUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+CHEEMSUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+CHILLGUYUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+CHIPUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+CITYUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+CLANKERUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+CLASHUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+CLOUDUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+COOKUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+COQUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+CORNUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+COWUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+CREPEUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+CUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+DADDYUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+DAMUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+DEGENUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+DINGOUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+DJI6930USDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+DODOUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+DOGEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+DOGINMEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+DOGSUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+DOGUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+DUPEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ECHOUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ELONUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+ESPUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+EVAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+FARMUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+FARTBOYUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+FARTCOINUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+FBUSDT,SPIKE_MEAN_REVERSION_EDGE,SpikeShortDaily,"Close > 2.0 stdev above its 20d mean or > 2.0x its 20d median; short at close, hold up to 5d",-40.95,40.95,1.0,1.5
+FEGUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+FIGHTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+FITUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+FLOCKUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+FLOKIUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+FLORKUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+FLOWUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+FOGUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+FORESTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+FORMUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+FREEDOMUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+FUNUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+FUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+FWOGUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+GHSTUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+GIGAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+GIGGLEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+GMEUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+GOATEDUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+GOATUSDT,SPIKE_MEAN_REVERSION_EDGE,SpikeShortDaily,"Close > 2.0 stdev above its 20d mean or > 2.0x its 20d median; short at close, hold up to 5d",-41.31,41.31,1.0,1.0
+GOBLINUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+GOCHUUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+GOHOMEUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: non_positive_expectancy)",,,1.0,1.0
+GRIFFAINUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+GROKUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+GUAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+HANAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+HAROLDUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+HARRYUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+HIPPOUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+HIVEUSDT,SPIKE_MEAN_REVERSION_EDGE,SpikeShortDaily,"Close > 2.0 stdev above its 20d mean or > 2.0x its 20d median; short at close, hold up to 5d",-15.92,15.92,1.0,2.5
+HMSTRUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+HOLOUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+HOOLIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+HOSKYUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+HOUSEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+HUNDUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+ICECREAMUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: pnl_dominated_by_one_trade, non_positive_expectancy)",,,1.0,1.0
+IDUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+IKAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+INUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+IQUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+JAGERUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+JOEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+JYAIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+KASPYUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+KATAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+KATUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+KEKIUSUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+KEYCATUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+KIBSHIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+KISHUUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+KOMAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+LADYSUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+LBUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+LIKEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+LKYUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+LOBOUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+LOFIUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+LUNAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+MAGATRUMPUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+MAGAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MAJORUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MANEKIUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: low_hit_rate, excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+MANUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+MANYUUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MASKUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+MBXUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+MEEPUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MEGAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MELANIAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MEMECOINUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MEMEFIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MEMESUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MEMEUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+METISUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+METUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MEWUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+MGOUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MIGGLESUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+MILLIUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+MINDFAKUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MIUUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MOCHIUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+MOEWUSDT,SPIKE_MEAN_REVERSION_EDGE,SpikeShortDaily,"Close > 2.0 stdev above its 20d mean or > 2.0x its 20d median; short at close, hold up to 5d",-44.09,44.09,1.0,1.0
+MOGUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+MOLTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MOMOUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MOODENGUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+MORIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MPCUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+MTPUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+MUBARAKUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+NAIUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+NAKAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+NEETUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+NOBODYUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+NOMUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+NOTUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+NPCUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+NSTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+OMGUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal",,,1.0,1.0
+OMNOMUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+ONEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+ONIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+OOBUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+OPENUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+OPTIMUSUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+ORDIUSDT,SPIKE_MEAN_REVERSION_EDGE,SpikeShortDaily,"Close > 2.0 stdev above its 20d mean or > 2.0x its 20d median; short at close, hold up to 5d",-26.37,26.37,1.0,1.0
+OSAKUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PACKUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PEACEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PEIPEIUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PENGUINUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PEOPLEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PEPECOINUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PEPEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PEPPERUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PEPUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PEPUUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PHNIXUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PHTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PIGGYUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PIPPINUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PITUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PIXELUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+PNUTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PODUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PONKEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+POPCATUSDT,SPIKE_MEAN_REVERSION_EDGE,SpikeShortDaily,"Close > 2.0 stdev above its 20d mean or > 2.0x its 20d median; short at close, hold up to 5d",-28.23,28.23,1.0,1.0
+PORKUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PROUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PUNCHUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PURRUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+PUSSUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+PXUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+RATSUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+RBTUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: non_positive_expectancy)",,,1.0,1.0
+REDOUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+RKCUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ROSEUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+RWAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+SAFEUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+SAIUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+SAMOUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+SATOUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+SBTCUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+SCOTTYUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+SCUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+SHIBUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+SHIROUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+SIRENUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+SNEKUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+SNSUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+SOHUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+SONICUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+SPELLUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+SQGROWUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+SRCUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal",,,1.0,1.0
+SUNCATUSDT,SPIKE_MEAN_REVERSION_EDGE,SpikeShortDaily,"Close > 2.0 stdev above its 20d mean or > 2.0x its 20d median; short at close, hold up to 5d",-27.22,27.22,1.0,1.0
+SUNDOGUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+SUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: low_hit_rate, pnl_dominated_by_one_trade, non_positive_expectancy)",,,1.0,1.0
+TAPUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+TCAPYUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TESTICLEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+THEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TMOONUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TONNYUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TOPUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+TOSHIUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TREATUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TREEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TRIPLETUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TROLLUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+TRTUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+TRUMPUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TRUSTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TRUTHUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TSTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TSUKAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+TURBOUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+TURTLEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+TUTUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+UAIUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+UFDUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+UNCUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+UPUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+URANUSUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+USDUCUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+USELESSUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+USUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+UTYAUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+VADERUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+VINEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+VINUUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+VISTAUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+VOLTUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+WELFUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+WENUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+WHITEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+WHITEWHALEUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+WIFUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+WINUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+WKCUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+WOJAKUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+WUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+XPUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+XUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+YFIUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+YURUUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ZENUSDT,NO_CLEAR_SHORT_EDGE,NoTrade,No statistically significant short pattern in spike/momentum/volume tests,,,1.0,1.0
+ZEREBROUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ZEROUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ZEUSUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown)",,,1.0,1.0
+ZSWAPUSDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+ZYNUSDT,MIXED/UNSTABLE,NoTrade,"Diagnostic sub-tests conflict, or backtest invalidated the raw signal (backtest failed robustness checks: excessive_drawdown, non_positive_expectancy)",,,1.0,1.0
+我踏马来了USDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
+龙虾USDT,INSUFFICIENT_HISTORY,NoTrade,Fewer than 30 valid daily bars after cleaning,,,1.0,1.0
